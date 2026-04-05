@@ -150,6 +150,22 @@
   svg[stroke="currentColor"] {
     filter: none !important;
   }
+
+  /* Grid Pattern Background */
+  .bg-grid-pattern {
+    background-image: 
+      linear-gradient(
+        to right,
+        var(--border) 1px,
+        transparent 1px
+      ),
+      linear-gradient(
+        to bottom,
+        var(--border) 1px,
+        transparent 1px
+      );
+    background-size: 40px 40px;
+  }
 }
 
 @layer utilities {
@@ -427,6 +443,33 @@
   }
 }
 
+@keyframes float-up {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
 /* Animation utility classes */
 @layer utilities {
   .animate-fade-in {
@@ -467,6 +510,15 @@
   }
   .animate-diagonal-slide {
     animation: diagonal-slide 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .animate-float-up {
+    animation: float-up 3s ease-in-out infinite;
+  }
+  .animate-rotate-slow {
+    animation: rotate-slow 20s linear infinite;
+  }
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
   }
   .animate-shimmer {
     background: linear-gradient(90deg, transparent, var(--muted)/30, transparent);
