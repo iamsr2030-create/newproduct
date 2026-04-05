@@ -11,7 +11,6 @@ import { StatsSection } from "@/components/stats"
 import { MagneticButton, CircleButton } from "@/components/magnetic-button"
 import { AnimatedHeading, Reveal } from "@/components/animated-text"
 import { MarqueeSection } from "@/components/marquee"
-import { PremiumHero } from "@/components/premium-hero"
 
 const services = [
   {
@@ -49,8 +48,79 @@ export default function HomePage() {
     <div className="min-h-screen bg-background">
       <Navbar variant="transparent" />
       
-      {/* Premium Hero Section */}
-      <PremiumHero />
+
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        {/* Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 -left-32 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 -right-32 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-20 lg:py-32">
+          <div className="max-w-5xl mx-auto">
+            {/* Badge */}
+            <Reveal delay={0}>
+              <div className="flex items-center justify-center gap-2 mb-8">
+                <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-muted text-sm font-medium text-muted-foreground">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
+                  </span>
+                  Available for new projects
+                </span>
+              </div>
+            </Reveal>
+
+            {/* Main Headline */}
+            <div className="text-center">
+              <AnimatedHeading
+                as="h1"
+                className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-medium leading-[0.95] tracking-tight"
+                delay={0.1}
+              >
+                <span className="block">Crafting digital</span>
+                <span className="block mt-2">
+                  experiences that{" "}
+                  <span className="italic text-muted-foreground">inspire</span>
+                </span>
+              </AnimatedHeading>
+            </div>
+
+            {/* Description */}
+            <Reveal delay={0.3}>
+              <p className="mt-8 text-lg md:text-xl text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed">
+                Award-winning designer and developer creating thoughtful, 
+                user-centered digital products that drive results.
+              </p>
+            </Reveal>
+
+            {/* CTA Buttons */}
+            <Reveal delay={0.4}>
+              <div className="mt-12 flex flex-col sm:flex-row items-center justify-center gap-4">
+                <MagneticButton href="/portfolio" variant="primary" size="lg" icon="arrow">
+                  View My Work
+                </MagneticButton>
+                <MagneticButton href="/contact" variant="outline" size="lg" icon="arrow-up">
+                  Get in Touch
+                </MagneticButton>
+              </div>
+            </Reveal>
+          </div>
+
+          {/* Scroll Indicator */}
+          <Reveal delay={0.6}>
+            <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3">
+              <span className="text-xs font-medium text-muted-foreground uppercase tracking-widest">
+                Scroll
+              </span>
+              <div className="h-16 w-[1px] bg-border relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1/2 bg-foreground animate-bounce-soft" />
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* Clients Marquee */}
       <MarqueeSection clients={clients} />
