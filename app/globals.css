@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
@@ -276,7 +275,8 @@
     @apply flex overflow-hidden;
   }
   .marquee-content {
-    @apply flex shrink-0 animate-marquee;
+    @apply flex shrink-0;
+    animation: marquee 30s linear infinite;
   }
   .marquee:hover .marquee-content {
     animation-play-state: paused;
