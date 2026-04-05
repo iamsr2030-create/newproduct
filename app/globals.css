@@ -141,6 +141,15 @@
   ::selection {
     @apply bg-accent/20 text-foreground;
   }
+
+  /* Suppress Dark Reader from modifying SVG elements to prevent hydration mismatches */
+  svg {
+    filter: none !important;
+  }
+
+  svg[stroke="currentColor"] {
+    filter: none !important;
+  }
 }
 
 @layer utilities {
