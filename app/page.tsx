@@ -128,8 +128,11 @@ export default function HomePage() {
       <StatsSection />
 
       {/* Services Section */}
-      <Section className="bg-muted/30">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start">
+      <Section className="bg-muted/30 relative overflow-hidden">
+        {/* Transition Element */}
+        <div className="absolute -top-48 -right-48 w-96 h-96 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+        
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-start relative">
           {/* Left: Header */}
           <div className="lg:sticky lg:top-32">
             <Reveal>
@@ -155,25 +158,29 @@ export default function HomePage() {
             </Reveal>
           </div>
 
-          {/* Right: Services List */}
-          <div className="space-y-6">
+          {/* Right: Services Grid - Asymmetrical Layout */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
             {services.map((service, index) => (
               <Reveal key={service.title} delay={index * 0.1}>
-                <div className="group relative p-8 rounded-2xl bg-card border border-border hover:border-foreground/20 transition-all duration-500 hover-lift">
-                  <div className="flex items-start gap-6">
-                    <span className="text-5xl font-light text-muted-foreground/30 transition-colors group-hover:text-accent/50" style={{ fontFamily: 'var(--font-display)' }}>
-                      {service.number}
-                    </span>
+                <div className={`group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-foreground/20 transition-all duration-500 hover:shadow-xl hover:translate-y-[-8px] ${
+                  index % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'
+                }`}>
+                  <div className="flex items-start gap-4">
+                    <div className="flex-shrink-0">
+                      <span className="text-4xl md:text-5xl font-light text-muted-foreground/30 transition-colors group-hover:text-accent/50" style={{ fontFamily: 'var(--font-display)' }}>
+                        {service.number}
+                      </span>
+                    </div>
                     <div className="flex-1">
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
+                      <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
                         {service.title}
                       </h3>
-                      <p className="text-muted-foreground leading-relaxed">
+                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                         {service.description}
                       </p>
                     </div>
-                    <div className="hidden sm:flex h-12 w-12 items-center justify-center rounded-full border border-border group-hover:border-foreground group-hover:bg-foreground group-hover:text-background transition-all duration-300">
-                      <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5" />
+                    <div className="hidden sm:flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-full border border-border group-hover:border-foreground group-hover:bg-foreground group-hover:text-background transition-all duration-300">
+                      <ArrowRight className="h-4 w-4 md:h-5 md:w-5 transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </div>
                 </div>

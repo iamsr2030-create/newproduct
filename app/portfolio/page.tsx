@@ -14,23 +14,26 @@ export const metadata = {
 
 export default function PortfolioPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background overflow-hidden">
       <Navbar />
       
-      {/* Hero */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-24">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mx-auto max-w-3xl text-center">
+      {/* Hero - Asymmetrical Background */}
+      <section className="relative pt-32 pb-20 md:pt-40 md:pb-24 overflow-hidden">
+        {/* Asymmetrical background elements */}
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-60 w-96 h-96 bg-accent/3 rounded-full blur-3xl pointer-events-none" />
+        <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="max-w-4xl">
             <p className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">
               Our Work
             </p>
             <h1 
-              className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
+              className="text-5xl font-bold tracking-tight sm:text-6xl lg:text-7xl leading-[1.1]"
               style={{ fontFamily: 'var(--font-display)' }}
             >
-              Projects that speak for themselves
+              Projects that <span className="italic text-muted-foreground">speak</span> for themselves
             </h1>
-            <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
+            <p className="mt-8 text-lg text-muted-foreground leading-relaxed max-w-2xl">
               A curated selection of our finest work, showcasing our expertise in 
               design, development, and digital strategy.
             </p>

@@ -96,62 +96,83 @@ export function PortfolioFilter({ showAll = false }: PortfolioFilterProps) {
         </div>
       </Reveal>
 
-      {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        {displayedProjects.map((project, index) => (
-          <Reveal key={project.id} delay={index * 0.1}>
-            <Link
-              href={project.href}
-              className="group relative block"
-              onMouseEnter={() => setHoveredProject(project.id)}
-              onMouseLeave={() => setHoveredProject(null)}
-            >
-              {/* Image Container */}
-              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
-                <Image
-                  src={project.image}
-                  alt={project.title}
-                  fill
-                  className={cn(
-                    "object-cover transition-all duration-700",
-                    hoveredProject === project.id ? "scale-110" : "scale-100"
-                  )}
-                />
-                
-                {/* Overlay */}
-                <div className={cn(
-                  "absolute inset-0 bg-foreground/0 transition-colors duration-500",
-                  hoveredProject === project.id && "bg-foreground/20"
-                )} />
-                
-                {/* View Button */}
-                <div className={cn(
-                  "absolute top-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-background text-foreground transition-all duration-500",
-                  hoveredProject === project.id 
-                    ? "opacity-100 scale-100 rotate-0" 
-                    : "opacity-0 scale-75 -rotate-45"
-                )}>
-                  <ArrowUpRight className="h-5 w-5" />
-                </div>
-              </div>
+      {/* Projects Grid - Asymmetrical Masonry Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 auto-rows-max gap-6 md:gap-8">
+        {displayedProjects.map((project, index) => {
+          // Create asymmetrical layout pattern
+          let colSpan = "md:col-span-1"
+          let rowSpan = "row-span-1"
+          
+          // Pattern for varying sizes: larger, normal, normal, large, etc.
+          if (index % 5 === 0) {
+            colSpan = "md:col-span-2 lg:col-span-2"
+            rowSpan = "md:row-span-2"
+          } else if (index % 5 === 3) {
+            colSpan = "md:col-span-2 lg:col-span-2"
+            rowSpan = "md:row-span-2"
+          }
 
-              {/* Project Info */}
-              <div className="mt-6 flex items-start justify-between">
-                <div>
-                  <h3 className="text-xl font-semibold transition-colors group-hover:text-accent">
-                    {project.title}
-                  </h3>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {project.category}
-                  </p>
+          return (
+            <Reveal key={project.id} delay={index * 0.08}>
+              <Link
+                href={project.href}
+                className="group relative block h-full transition-all duration-500 hover:translate-y-[-4px]"
+                onMouseEnter={() => setHoveredProject(project.id)}
+                onMouseLeave={() => setHoveredProject(null)}
+              >
+                {/* Image Container */}
+                <div className={cn(
+                  "relative overflow-hidden rounded-3xl bg-muted h-full",
+                  index % 5 === 0 || index % 5 === 3 ? "aspect-[3/4] md:aspect-square" : "aspect-[4/3]"
+                )}>
+                  <Image
+                    src={project.image}
+                    alt={project.title}
+                    fill
+                    className={cn(
+                      "object-cover transition-all duration-700",
+                      hoveredProject === project.id ? "scale-125 blur-sm" : "scale-100"
+                    )}
+                  />
+                  
+                  {/* Gradient Overlay */}
+                  <div className={cn(
+                    "absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-foreground/0 transition-all duration-500",
+                    hoveredProject === project.id && "from-foreground/60"
+                  )} />
+                  
+                  {/* Content Overlay */}
+                  <div className={cn(
+                    "absolute inset-0 flex flex-col justify-end p-6 md:p-8 transition-all duration-500",
+                    hoveredProject === project.id ? "opacity-100" : "opacity-0 md:opacity-100"
+                  )}>
+                    <h3 className="text-lg md:text-2xl font-semibold text-background transition-transform duration-500">
+                      {project.title}
+                    </h3>
+                    <div className="mt-3 flex items-center justify-between">
+                      <p className="text-sm text-background/80">
+                        {project.category}
+                      </p>
+                      <span className="text-sm text-background/80">
+                        {project.year}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  {/* View Button */}
+                  <div className={cn(
+                    "absolute top-6 right-6 flex h-12 w-12 items-center justify-center rounded-full bg-background text-foreground transition-all duration-500 shadow-lg",
+                    hoveredProject === project.id 
+                      ? "opacity-100 scale-100 rotate-0" 
+                      : "opacity-0 scale-0 rotate-45"
+                  )}>
+                    <ArrowUpRight className="h-5 w-5 transition-transform duration-300" />
+                  </div>
                 </div>
-                <span className="text-sm text-muted-foreground">
-                  {project.year}
-                </span>
-              </div>
-            </Link>
-          </Reveal>
-        ))}
+              </Link>
+            </Reveal>
+          )
+        })}
       </div>
 
       {!showAll && filteredProjects.length > 6 && (
