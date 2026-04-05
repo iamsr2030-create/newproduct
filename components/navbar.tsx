@@ -53,10 +53,10 @@ export function Navbar({ variant = "default" }: NavbarProps) {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-500 backdrop-blur-md",
           scrolled || variant === "default"
-            ? "glass py-3"
-            : "bg-transparent py-5",
+            ? "bg-background/80 border-b border-border/40 shadow-sm py-4"
+            : "bg-transparent py-6",
           hidden && !mobileMenuOpen && "-translate-y-full"
         )}
       >
@@ -78,20 +78,13 @@ export function Navbar({ variant = "default" }: NavbarProps) {
                 key={item.name}
                 href={item.href}
                 className={cn(
-                  "relative px-4 py-2 text-sm font-medium transition-colors duration-300",
+                  "relative px-4 py-2.5 text-sm font-medium transition-colors duration-300 rounded-lg",
                   pathname === item.href
-                    ? "text-foreground"
-                    : "text-muted-foreground hover:text-foreground"
+                    ? "text-foreground bg-muted/50"
+                    : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
                 )}
               >
                 {item.name}
-                {/* Active indicator */}
-                <span
-                  className={cn(
-                    "absolute bottom-1 left-4 right-4 h-[2px] bg-foreground rounded-full transition-transform duration-300 origin-left",
-                    pathname === item.href ? "scale-x-100" : "scale-x-0"
-                  )}
-                />
               </Link>
             ))}
           </div>

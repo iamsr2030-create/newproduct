@@ -45,18 +45,18 @@ export function MagneticButton({
 
   const baseStyles = cn(
     "relative inline-flex items-center justify-center gap-2 font-medium transition-all duration-300",
-    "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+    "focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background focus-visible:animate-glow-pulse",
     "disabled:pointer-events-none disabled:opacity-50",
     {
-      "h-9 px-5 text-sm rounded-full": size === "sm",
-      "h-11 px-7 text-sm rounded-full": size === "md",
+      "h-10 px-6 text-sm rounded-full": size === "sm",
+      "h-12 px-8 text-base rounded-full": size === "md",
       "h-14 px-10 text-base rounded-full": size === "lg",
     },
     {
-      "bg-foreground text-background hover:bg-foreground/90": variant === "primary",
-      "bg-muted text-foreground hover:bg-muted/80": variant === "secondary",
-      "border-2 border-foreground text-foreground hover:bg-foreground hover:text-background": variant === "outline",
-      "text-foreground hover:bg-muted": variant === "ghost",
+      "bg-foreground text-background hover:shadow-lg hover:translate-y-[-2px] active:translate-y-0": variant === "primary",
+      "bg-muted text-foreground hover:bg-muted/80 hover:shadow-md": variant === "secondary",
+      "border-2 border-foreground/30 text-foreground hover:border-foreground hover:shadow-lg hover:translate-y-[-2px]": variant === "outline",
+      "text-foreground hover:bg-muted/50 hover:translate-y-[-1px]": variant === "ghost",
     },
     className
   )
@@ -90,7 +90,8 @@ export function MagneticButton({
       {iconElement}
       
       {/* Hover background effect */}
-      <span className="absolute inset-0 rounded-full bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <span className="absolute inset-0 rounded-full bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+      <span className="absolute inset-0 rounded-full bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
   )
 
@@ -149,8 +150,9 @@ export function CircleButton({
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
       className={cn(
-        "relative flex items-center justify-center rounded-full border-2 border-foreground text-foreground cursor-pointer",
-        "transition-all duration-300 hover:bg-foreground hover:text-background group",
+        "relative flex items-center justify-center rounded-full border-2 border-foreground/30 text-foreground cursor-pointer",
+        "transition-all duration-300 hover:border-foreground hover:bg-foreground hover:text-background hover:shadow-lg hover:translate-y-[-2px] group",
+        "focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
         sizeClasses[size],
         className
       )}
@@ -159,6 +161,7 @@ export function CircleButton({
       }}
     >
       {children || <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-0.5" />}
+      <span className="absolute inset-0 rounded-full bg-foreground/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
     </div>
   )
 
