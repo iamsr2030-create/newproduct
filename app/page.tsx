@@ -13,7 +13,6 @@ import { MagneticButton, CircleButton } from "@/components/magnetic-button"
 import { AnimatedHeading, Reveal } from "@/components/animated-text"
 import { MarqueeSection } from "@/components/marquee"
 import { PremiumHero } from "@/components/premium-hero"
-import { PageTransition } from "@/components/page-transition"
 
 const services = [
   {
@@ -48,10 +47,9 @@ const clients = [
 
 export default function HomePage() {
   return (
-    <PageTransition>
-      <div className="min-h-screen bg-background">
-        <Navbar variant="transparent" />
-      
+    <div className="min-h-screen bg-background">
+      <Navbar variant="transparent" />
+    
       {/* Premium Hero Section */}
       <PremiumHero />
 
@@ -230,7 +228,6 @@ export default function HomePage() {
       </Section>
 
       <Footer />
-      </div>
-    </PageTransition>
+    </div>
   )
 }
