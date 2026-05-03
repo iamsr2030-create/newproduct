@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { Quote, ChevronLeft, ChevronRight, Star } from "lucide-react"
 import { Section } from "@/components/section"
@@ -62,19 +63,29 @@ export function TestimonialsSection() {
           <div className="mt-12 relative">
             <Quote className="absolute -top-2 -left-2 h-12 w-12 text-accent/20" />
             
-            <blockquote
-              key={activeIndex}
-              className={cn(
-                "relative pl-8 text-xl md:text-2xl leading-relaxed text-foreground/90",
-                "animate-fade-in"
-              )}
-              style={{ fontFamily: 'var(--font-display)' }}
-            >
-              &ldquo;{activeTestimonial.quote}&rdquo;
-            </blockquote>
+            <AnimatePresence mode="wait">
+              <motion.blockquote
+                key={activeIndex}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className={cn(
+                  "relative pl-8 text-xl md:text-2xl leading-relaxed text-foreground/90"
+                )}
+                style={{ fontFamily: 'var(--font-display)' }}
+              >
+                &ldquo;{activeTestimonial.quote}&rdquo;
+              </motion.blockquote>
+            </AnimatePresence>
 
             {/* Author */}
-            <div className="mt-8 pl-8 flex items-center gap-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="mt-8 pl-8 flex items-center gap-4"
+            >
               <div className="relative h-14 w-14 rounded-full overflow-hidden ring-2 ring-background">
                 <Image
                   src={activeTestimonial.image}
@@ -92,7 +103,7 @@ export function TestimonialsSection() {
                   <Star key={i} className="h-4 w-4 fill-accent text-accent" />
                 ))}
               </div>
-            </div>
+            </motion.div>
           </div>
 
           {/* Navigation */}

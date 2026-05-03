@@ -1,5 +1,6 @@
 import Link from "next/link"
 import Image from "next/image"
+import { motion } from "framer-motion"
 import { ArrowRight, ArrowDown, Briefcase, Code, Palette, Users, Star } from "lucide-react"
 import { Navbar } from "@/components/navbar"
 import { Footer } from "@/components/footer"
@@ -12,6 +13,7 @@ import { MagneticButton, CircleButton } from "@/components/magnetic-button"
 import { AnimatedHeading, Reveal } from "@/components/animated-text"
 import { MarqueeSection } from "@/components/marquee"
 import { PremiumHero } from "@/components/premium-hero"
+import { PageTransition } from "@/components/page-transition"
 
 const services = [
   {
@@ -46,8 +48,9 @@ const clients = [
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen bg-background">
-      <Navbar variant="transparent" />
+    <PageTransition>
+      <div className="min-h-screen bg-background">
+        <Navbar variant="transparent" />
       
       {/* Premium Hero Section */}
       <PremiumHero />
@@ -90,10 +93,32 @@ export default function HomePage() {
           </div>
 
           {/* Right: Services Grid - Asymmetrical Layout */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.2 }}
+            variants={{
+              visible: {
+                transition: {
+                  staggerChildren: 0.1,
+                  delayChildren: 0.1,
+                },
+              },
+            }}
+          >
             {services.map((service, index) => (
-              <Reveal key={service.title} delay={index * 0.1}>
-                <div className={`group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-foreground/20 transition-all duration-500 hover:shadow-xl hover:translate-y-[-8px] ${
+              <motion.div
+                key={service.title}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.6, ease: "easeOut" },
+                  },
+                }}
+                className={`group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-foreground/20 transition-all duration-500 hover:shadow-xl hover:translate-y-[-8px] ${
                   index % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'
                 }`}>
                   <div className="flex items-start gap-4">
@@ -115,9 +140,9 @@ export default function HomePage() {
                     </div>
                   </div>
                 </div>
-              </Reveal>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </Section>
 
@@ -205,6 +230,7 @@ export default function HomePage() {
       </Section>
 
       <Footer />
-    </div>
+      </div>
+    </PageTransition>
   )
 }

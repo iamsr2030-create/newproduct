@@ -3,6 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { ArrowUpRight } from "lucide-react"
+import { motion } from "framer-motion"
 import { Reveal } from "@/components/animated-text"
 import { cn } from "@/lib/utils"
 
@@ -41,11 +42,34 @@ const posts = [
 
 export function BlogPreview() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <motion.div
+      className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.1 }}
+      variants={{
+        visible: {
+          transition: {
+            staggerChildren: 0.12,
+            delayChildren: 0.05,
+          },
+        },
+      }}
+    >
       {posts.map((post, index) => (
-        <Reveal key={post.id} delay={index * 0.1}>
-          <article className="group h-full">
-            <Link href={post.href} className="flex flex-col h-full">
+        <motion.article
+          key={post.id}
+          className="group h-full"
+          variants={{
+            hidden: { opacity: 0, y: 30 },
+            visible: {
+              opacity: 1,
+              y: 0,
+              transition: { duration: 0.6, ease: "easeOut" },
+            },
+          }}
+        >
+          <Link href={post.href} className="flex flex-col h-full">
               {/* Image */}
               <div className="relative aspect-[16/10] overflow-hidden rounded-2xl mb-6">
                 <Image
@@ -102,9 +126,8 @@ export function BlogPreview() {
                 </div>
               </div>
             </Link>
-          </article>
-        </Reveal>
+          </motion.article>
       ))}
-    </div>
+    </motion.div>
   )
 }

@@ -1,3 +1,7 @@
+'use client'
+
+import { motion, useScroll, useTransform } from "framer-motion"
+import { useRef } from "react"
 import { cn } from "@/lib/utils"
 import { Reveal, AnimatedHeading } from "@/components/animated-text"
 
@@ -5,13 +9,35 @@ interface SectionProps {
   children: React.ReactNode
   className?: string
   id?: string
+  parallax?: boolean
+  parallaxSpeed?: number
 }
 
-export function Section({ children, className, id }: SectionProps) {
+export function Section({ 
+  children, 
+  className, 
+  id,
+  parallax = false,
+  parallaxSpeed = 0.5 
+}: SectionProps) {
+  const ref = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  })
+
+  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8])
+  const y = useTransform(scrollYProgress, [0, 0.5, 1], [40, 0, -40])
+
   return (
-    <section id={id} className={cn("py-20 md:py-32", className)}>
+    <motion.section
+      ref={ref}
+      id={id}
+      className={cn("py-20 md:py-32", className)}
+      style={parallax ? { opacity, y } : {}}
+    >
       <div className="mx-auto max-w-7xl px-6 lg:px-8">{children}</div>
-    </section>
+    </motion.section>
   )
 }
 
