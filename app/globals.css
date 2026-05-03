@@ -3,76 +3,43 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Premium warm neutral palette */
-  --background: oklch(0.985 0.002 75);
-  --foreground: oklch(0.12 0.01 60);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.12 0.01 60);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.12 0.01 60);
-  --primary: oklch(0.15 0.01 60);
-  --primary-foreground: oklch(0.985 0.002 75);
-  --secondary: oklch(0.96 0.005 75);
-  --secondary-foreground: oklch(0.15 0.01 60);
-  --muted: oklch(0.94 0.005 75);
-  --muted-foreground: oklch(0.45 0.01 60);
-  --accent: oklch(0.55 0.12 25);
-  --accent-foreground: oklch(0.985 0.002 75);
-  --destructive: oklch(0.55 0.2 25);
-  --destructive-foreground: oklch(0.99 0 0);
-  --border: oklch(0.90 0.005 75);
-  --input: oklch(0.92 0.005 75);
-  --ring: oklch(0.55 0.12 25);
-  --chart-1: oklch(0.55 0.12 25);
-  --chart-2: oklch(0.6 0.1 180);
-  --chart-3: oklch(0.4 0.07 230);
-  --chart-4: oklch(0.8 0.15 85);
-  --chart-5: oklch(0.75 0.15 70);
-  --radius: 0.75rem;
-  --sidebar: oklch(0.98 0.002 75);
-  --sidebar-foreground: oklch(0.12 0.01 60);
-  --sidebar-primary: oklch(0.15 0.01 60);
-  --sidebar-primary-foreground: oklch(0.985 0.002 75);
-  --sidebar-accent: oklch(0.96 0.005 75);
-  --sidebar-accent-foreground: oklch(0.15 0.01 60);
-  --sidebar-border: oklch(0.90 0.005 75);
-  --sidebar-ring: oklch(0.55 0.12 25);
-}
-
-.dark {
+  /* Dark premium theme with vibrant gradients */
   --background: oklch(0.08 0.01 60);
   --foreground: oklch(0.92 0.005 75);
-  --card: oklch(0.11 0.01 60);
+  --card: oklch(0.12 0.015 60);
   --card-foreground: oklch(0.92 0.005 75);
-  --popover: oklch(0.11 0.01 60);
+  --popover: oklch(0.12 0.015 60);
   --popover-foreground: oklch(0.92 0.005 75);
   --primary: oklch(0.92 0.005 75);
   --primary-foreground: oklch(0.08 0.01 60);
-  --secondary: oklch(0.16 0.01 60);
+  --secondary: oklch(0.18 0.015 60);
   --secondary-foreground: oklch(0.92 0.005 75);
-  --muted: oklch(0.18 0.01 60);
-  --muted-foreground: oklch(0.60 0.01 60);
-  --accent: oklch(0.65 0.12 25);
+  --muted: oklch(0.20 0.01 60);
+  --muted-foreground: oklch(0.65 0.01 60);
+  --accent: oklch(0.68 0.18 28);
   --accent-foreground: oklch(0.08 0.01 60);
-  --destructive: oklch(0.5 0.2 25);
+  --destructive: oklch(0.55 0.22 25);
   --destructive-foreground: oklch(0.92 0.005 75);
-  --border: oklch(0.20 0.01 60);
+  --border: oklch(0.22 0.015 60);
   --input: oklch(0.20 0.01 60);
-  --ring: oklch(0.65 0.12 25);
-  --chart-1: oklch(0.65 0.12 25);
-  --chart-2: oklch(0.7 0.12 180);
-  --chart-3: oklch(0.75 0.15 70);
-  --chart-4: oklch(0.63 0.2 305);
-  --chart-5: oklch(0.65 0.2 15);
-  --sidebar: oklch(0.11 0.01 60);
+  --ring: oklch(0.68 0.18 28);
+  --chart-1: oklch(0.68 0.18 28);
+  --chart-2: oklch(0.75 0.15 180);
+  --chart-3: oklch(0.70 0.18 270);
+  --chart-4: oklch(0.65 0.20 320);
+  --chart-5: oklch(0.72 0.18 40);
+  --radius: 1rem;
+  --sidebar: oklch(0.12 0.015 60);
   --sidebar-foreground: oklch(0.92 0.005 75);
-  --sidebar-primary: oklch(0.65 0.12 25);
+  --sidebar-primary: oklch(0.68 0.18 28);
   --sidebar-primary-foreground: oklch(0.08 0.01 60);
-  --sidebar-accent: oklch(0.16 0.01 60);
+  --sidebar-accent: oklch(0.18 0.015 60);
   --sidebar-accent-foreground: oklch(0.92 0.005 75);
-  --sidebar-border: oklch(0.20 0.01 60);
-  --sidebar-ring: oklch(0.65 0.12 25);
+  --sidebar-border: oklch(0.22 0.015 60);
+  --sidebar-ring: oklch(0.68 0.18 28);
 }
+
+
 
 @theme inline {
   --font-sans: var(--font-inter), system-ui, sans-serif;
@@ -470,6 +437,36 @@
   }
 }
 
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(var(--accent-rgb), 0.6);
+  }
+}
+
 /* Animation utility classes */
 @layer utilities {
   .animate-fade-in {
@@ -510,6 +507,16 @@
   }
   .animate-diagonal-slide {
     animation: diagonal-slide 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  .animate-gradient-shift {
+    animation: gradient-shift 6s ease-in-out infinite;
+    background-size: 200% 200%;
+  }
+  .animate-float-slow {
+    animation: float-slow 4s ease-in-out infinite;
+  }
+  .animate-glow-pulse {
+    animation: glow-pulse 2s ease-in-out infinite;
   }
   .animate-float-up {
     animation: float-up 3s ease-in-out infinite;
