@@ -120,24 +120,24 @@ export default function HomePage() {
                 }}
                 className={`group relative p-6 md:p-8 rounded-2xl bg-card border border-border hover:border-foreground/20 transition-all duration-500 hover:shadow-xl hover:translate-y-[-8px] ${
                   index % 3 === 0 ? 'md:col-span-2' : 'md:col-span-1'
-                }`}>
-                  <div className="flex items-start gap-4">
-                    <div className="flex-shrink-0">
-                      <span className="text-4xl md:text-5xl font-light text-muted-foreground/30 transition-colors group-hover:text-accent/50" style={{ fontFamily: 'var(--font-display)' }}>
-                        {service.number}
-                      </span>
-                    </div>
-                    <div className="flex-1">
-                      <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
-                        {service.title}
-                      </h3>
-                      <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                        {service.description}
-                      </p>
-                    </div>
-                    <div className="hidden sm:flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-full border border-border group-hover:border-foreground group-hover:bg-foreground group-hover:text-background transition-all duration-300">
-                      <ArrowRight className="h-4 w-4 md:h-5 md:w-5 transition-transform group-hover:translate-x-0.5" />
-                    </div>
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <div className="flex-shrink-0">
+                    <span className="text-4xl md:text-5xl font-light text-muted-foreground/30 transition-colors group-hover:text-accent/50" style={{ fontFamily: 'var(--font-display)' }}>
+                      {service.number}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg md:text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                      {service.description}
+                    </p>
+                  </div>
+                  <div className="hidden sm:flex h-10 w-10 md:h-12 md:w-12 flex-shrink-0 items-center justify-center rounded-full border border-border group-hover:border-foreground group-hover:bg-foreground group-hover:text-background transition-all duration-300">
+                    <ArrowRight className="h-4 w-4 md:h-5 md:w-5 transition-transform group-hover:translate-x-0.5" />
                   </div>
                 </div>
               </motion.div>
