@@ -4,9 +4,8 @@ import * as React from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
-import { ArrowUpRight, ChevronRight } from "lucide-react"
+import { ArrowUpRight } from "lucide-react"
 import { Reveal } from "@/components/animated-text"
-import { motion, AnimatePresence } from "framer-motion"
 
 const categories = ["All", "Branding", "Web Design", "Development", "UI/UX"]
 
@@ -76,230 +75,84 @@ export function PortfolioFilter({ showAll = false }: PortfolioFilterProps) {
   const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, 6)
 
   return (
-    <div className="space-y-16">
-      {/* Premium Filter Section */}
+    <div className="space-y-12">
+      {/* Filter Buttons */}
       <Reveal>
-        <div className="flex flex-col items-center gap-8">
-          {/* Filter Label */}
-          <div className="text-center">
-            <p className="text-sm font-medium text-muted-foreground uppercase tracking-widest mb-4">
-              Filter Work
-            </p>
-            <h3 className="text-2xl font-bold">Select Category</h3>
-          </div>
-
-          {/* Animated Filter Buttons */}
-          <div className="flex flex-wrap justify-center gap-3">
-            {categories.map((category, idx) => (
-              <motion.button
-                key={category}
-                onClick={() => setActiveCategory(category)}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.05 }}
-                whileHover={{ y: -2 }}
-                whileTap={{ scale: 0.95 }}
-                className={cn(
-                  "relative px-6 py-3 text-sm font-semibold rounded-full transition-all duration-300 overflow-hidden",
-                  activeCategory === category
-                    ? "bg-accent text-background shadow-lg shadow-accent/50"
-                    : "bg-muted/50 text-foreground hover:bg-muted hover:shadow-md"
-                )}
-              >
-                {/* Animated underline for active */}
-                {activeCategory === category && (
-                  <motion.div
-                    layoutId="activeUnderline"
-                    className="absolute inset-0 bg-accent/20 rounded-full"
-                    initial={false}
-                    transition={{ type: "spring", stiffness: 200, damping: 30 }}
-                  />
-                )}
-                <span className="relative z-10 flex items-center gap-2">
-                  {category}
-                  {activeCategory === category && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ type: "spring", delay: 0.1 }}
-                    >
-                      <ChevronRight className="h-3.5 w-3.5" />
-                    </motion.span>
-                  )}
-                </span>
-              </motion.button>
-            ))}
-          </div>
+        <div className="flex flex-wrap justify-center gap-2">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setActiveCategory(category)}
+              className={cn(
+                "px-5 py-2.5 text-sm font-medium rounded-full transition-all duration-300",
+                activeCategory === category
+                  ? "bg-foreground text-background"
+                  : "bg-muted text-muted-foreground hover:bg-muted/80 hover:text-foreground"
+              )}
+            >
+              {category}
+            </button>
+          ))}
         </div>
       </Reveal>
 
-      {/* Advanced Projects Grid with Smooth Transitions */}
-      <AnimatePresence mode="popLayout">
-        <motion.div
-          key={activeCategory}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.4 }}
-          className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 md:gap-10"
-        >
-          {displayedProjects.map((project, index) => {
-            const isLarge = index === 0 || index === 4
-            
-            return (
-              <motion.div
-                key={`${activeCategory}-${project.id}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{
-                  duration: 0.5,
-                  delay: index * 0.08,
-                  ease: "easeOut"
-                }}
-                className={cn(
-                  "group relative overflow-hidden rounded-2xl h-full cursor-pointer",
-                  isLarge && "md:col-span-2 md:row-span-2"
-                )}
-                onMouseEnter={() => setHoveredProject(project.id)}
-                onMouseLeave={() => setHoveredProject(null)}
-              >
-                <Link href={project.href} className="block h-full">
-                  {/* Image Container */}
-                  <div className={cn(
-                    "relative w-full overflow-hidden bg-muted",
-                    isLarge ? "aspect-square" : "aspect-[4/3]"
-                  )}>
-                    {/* Image with sophisticated zoom effect */}
-                    <motion.div
-                      className="relative w-full h-full"
-                      animate={{
-                        scale: hoveredProject === project.id ? 1.1 : 1
-                      }}
-                      transition={{
-                        duration: 0.6,
-                        ease: "easeInOut"
-                      }}
-                    >
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1536px) 50vw, 33vw"
-                      />
-                    </motion.div>
+      {/* Projects Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {displayedProjects.map((project, index) => (
+          <Reveal key={project.id} delay={index * 0.1}>
+            <Link
+              href={project.href}
+              className="group relative block"
+              onMouseEnter={() => setHoveredProject(project.id)}
+              onMouseLeave={() => setHoveredProject(null)}
+            >
+              {/* Image Container */}
+              <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-muted">
+                <Image
+                  src={project.image}
+                  alt={project.title}
+                  fill
+                  className={cn(
+                    "object-cover transition-all duration-700",
+                    hoveredProject === project.id ? "scale-110" : "scale-100"
+                  )}
+                />
+                
+                {/* Overlay */}
+                <div className={cn(
+                  "absolute inset-0 bg-foreground/0 transition-colors duration-500",
+                  hoveredProject === project.id && "bg-foreground/20"
+                )} />
+                
+                {/* View Button */}
+                <div className={cn(
+                  "absolute top-6 right-6 flex h-14 w-14 items-center justify-center rounded-full bg-background text-foreground transition-all duration-500",
+                  hoveredProject === project.id 
+                    ? "opacity-100 scale-100 rotate-0" 
+                    : "opacity-0 scale-75 -rotate-45"
+                )}>
+                  <ArrowUpRight className="h-5 w-5" />
+                </div>
+              </div>
 
-                    {/* Multi-layered overlay system */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/30"
-                      animate={{
-                        opacity: hoveredProject === project.id ? 1 : 0.5
-                      }}
-                      transition={{ duration: 0.4 }}
-                    />
-                    
-                    {/* Rich gradient overlay for depth */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent"
-                      animate={{
-                        opacity: hoveredProject === project.id ? 1 : 0.6
-                      }}
-                      transition={{ duration: 0.4 }}
-                    />
-
-                    {/* Accent glow effect on hover */}
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-br from-accent/0 via-accent/0 to-accent/5"
-                      animate={{
-                        opacity: hoveredProject === project.id ? 1 : 0
-                      }}
-                      transition={{ duration: 0.4 }}
-                    />
-
-                    {/* Content Section - Enhanced Typography */}
-                    <motion.div
-                      className="absolute inset-0 flex flex-col justify-end p-8 md:p-10"
-                      animate={{
-                        opacity: 1
-                      }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      {/* Category Badge */}
-                      <motion.div
-                        className="mb-4 inline-flex items-center gap-2 w-fit"
-                        animate={{
-                          y: hoveredProject === project.id ? 0 : 4,
-                          opacity: hoveredProject === project.id ? 1 : 0.7
-                        }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div className="h-1 w-6 rounded-full bg-accent" />
-                        <span className="text-xs font-semibold uppercase tracking-wider text-accent">
-                          {project.category}
-                        </span>
-                      </motion.div>
-
-                      {/* Project Title */}
-                      <motion.h3
-                        className="text-2xl md:text-3xl font-bold text-foreground leading-tight mb-4"
-                        animate={{
-                          y: hoveredProject === project.id ? 0 : 2
-                        }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        {project.title}
-                      </motion.h3>
-
-                      {/* Meta Information */}
-                      <motion.div
-                        className="flex items-center justify-between text-sm text-foreground/70"
-                        animate={{
-                          y: hoveredProject === project.id ? 0 : 2,
-                          opacity: hoveredProject === project.id ? 1 : 0.8
-                        }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <span>{project.year}</span>
-                        <span>View Project</span>
-                      </motion.div>
-                    </motion.div>
-
-                    {/* Floating Action Button - Premium Style */}
-                    <motion.div
-                      className="absolute top-8 right-8 flex h-14 w-14 items-center justify-center rounded-full bg-accent text-background shadow-xl"
-                      animate={{
-                        scale: hoveredProject === project.id ? 1 : 0.8,
-                        opacity: hoveredProject === project.id ? 1 : 0.6,
-                        y: hoveredProject === project.id ? 0 : 4
-                      }}
-                      transition={{
-                        duration: 0.3,
-                        type: "spring",
-                        stiffness: 200,
-                        damping: 20
-                      }}
-                      whileHover={{ scale: 1.1 }}
-                      whileTap={{ scale: 0.95 }}
-                    >
-                      <ArrowUpRight className="h-6 w-6" />
-                    </motion.div>
-
-                    {/* Border accent on hover */}
-                    <motion.div
-                      className="absolute inset-0 rounded-2xl border-2 border-accent"
-                      animate={{
-                        opacity: hoveredProject === project.id ? 1 : 0
-                      }}
-                      transition={{ duration: 0.3 }}
-                    />
-                  </div>
-                </Link>
-              </motion.div>
-            )
-          })}
-        </motion.div>
-      </AnimatePresence>
+              {/* Project Info */}
+              <div className="mt-6 flex items-start justify-between">
+                <div>
+                  <h3 className="text-xl font-semibold transition-colors group-hover:text-accent">
+                    {project.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-muted-foreground">
+                    {project.category}
+                  </p>
+                </div>
+                <span className="text-sm text-muted-foreground">
+                  {project.year}
+                </span>
+              </div>
+            </Link>
+          </Reveal>
+        ))}
+      </div>
 
       {!showAll && filteredProjects.length > 6 && (
         <Reveal>
